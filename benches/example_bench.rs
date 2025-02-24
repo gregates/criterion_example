@@ -49,10 +49,17 @@ fn example_bench(c: &mut Criterion)  {
             BatchSize::SmallInput,
         )
     });
-    c.bench_function("big slice no closure", |b| {
+    c.bench_function("no closure", |b| {
         b.iter_batched(
             || (0..10_000_000).collect::<Vec<_>>(),
             |v| add(&v),
+            BatchSize::SmallInput,
+        )
+    });
+    c.bench_function("no closure & return input", |b| {
+        b.iter_batched(
+            || (0..10_000_000).collect::<Vec<_>>(),
+            |v| { add(&v); v },
             BatchSize::SmallInput,
         )
     });
