@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, Criterion};
 
 use criterion_example::add;
 
@@ -53,6 +53,20 @@ fn example_bench(c: &mut Criterion)  {
         b.iter_batched(
             || (0..10_000_000).collect::<Vec<_>>(),
             |v| add(&v),
+            BatchSize::SmallInput,
+        )
+    });
+    c.bench_function("black box", |b| {
+        b.iter_batched(
+            || setup_big_slice(),
+            |call| black_box(call),
+            BatchSize::SmallInput,
+        )
+    });
+    c.bench_function("black box no closure", |b| {
+        b.iter_batched(
+            || (0..10_000_000).collect::<Vec<_>>(),
+            |v| black_box(move || add(&v)),
             BatchSize::SmallInput,
         )
     });
