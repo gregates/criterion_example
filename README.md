@@ -1,3 +1,6 @@
+Demo for measuring overhead in [criterion](https://github.com/bheisler/criterion.rs) benchmarks,
+using different patterns to separate input generation from the function you want to measure.
+
 ```
 small slice                 time:   [12.181 ns 12.192 ns 12.201 ns]
 big slice                   time:   [4.0691 ms 4.0853 ms 4.1001 ms]
@@ -9,3 +12,7 @@ black box no closure        time:   [37.270 ns 39.100 ns 41.183 ns]
 ```
 
 measurements taken on EC2 r8g.2xlarge
+
+See also [user guide section on timing
+loops](https://bheisler.github.io/criterion.rs/book/user_guide/timing_loops.html).
+
